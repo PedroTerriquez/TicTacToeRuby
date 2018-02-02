@@ -15,13 +15,13 @@ module TicTacToe
         if @turn.even?
           puts "Pick a position for X"
           position = Integer(gets.chomp) - 1
-          b.pick(position,p1.symbol)
+          redo unless b.pick(position,p1.symbol) 
           @turn = 1
           @finish += 1
         elsif @turn.odd?
           puts "Pick a position for O"
           position = Integer(gets.chomp) -1
-          b.pick(position,p2.symbol)
+          redo unless b.pick(position,p2.symbol)
           @turn = 0
           @finish += 1
         end
@@ -30,6 +30,9 @@ module TicTacToe
           puts "WINNER IS #{winner?b}"
         end
       end
+    rescue ArgumentError
+      puts "\nUSE NUMBERS PLEASE :) \n"
+      play(b,p1,p2)
     end
 
     def winner?(b)

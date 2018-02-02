@@ -8,7 +8,10 @@ module TicTacToe
     end
 
     def pick(position,player)
-      raise StandardError, "Ocupado" unless @board[position] != " X " && @board[position] !=" O "
+      raise StandardError, "DONT" unless @board[position] != " X " && @board[position] !=" O "
+    rescue
+      return false
+    else
       @board[position]= " #{player} "
       draw
     end

@@ -30,6 +30,9 @@ module TicTacToe
           puts "WINNER IS #{winner?b}"
         end
       end
+    rescue ArgumentError
+      puts "\nUSE NUMBERS PLEASE :) \n"
+      play(b,p1,p2)
     end
 
     def winner?(b)

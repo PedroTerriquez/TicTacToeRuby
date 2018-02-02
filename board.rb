@@ -10,6 +10,7 @@ module TicTacToe
     def pick(position,player)
       raise StandardError, "DONT" unless @board[position] != " X " && @board[position] !=" O "
     rescue
+      puts "\n\nARE U BLIND? ITS ALREADY OCCUPIED \n\n"
       return false
     else
       @board[position]= " #{player} "

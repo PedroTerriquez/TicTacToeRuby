@@ -7,20 +7,23 @@ module TicTacToe
       p2 = Player.new("O")
       @turn = 0
       @finish = 0
+      @correctposition = 0..8 #Array start at 0
       play(b,p1,p2)
     end
 
     def play(b,p1,p2)
       while @finish < 9 
         if @turn.even?
-          puts "Pick a position for X"
+          puts "Pick a position for X with numbers (0-9)"
           position = Integer(gets.chomp) - 1
+          redo if !@correctposition.include?position
           redo unless b.pick(position,p1.symbol) 
           @turn = 1
           @finish += 1
         elsif @turn.odd?
-          puts "Pick a position for O"
+          puts "Pick a position for O with numbers (0-9)"
           position = Integer(gets.chomp) -1
+          redo if !@correctposition.include?position
           redo unless b.pick(position,p2.symbol)
           @turn = 0
           @finish += 1
@@ -31,7 +34,7 @@ module TicTacToe
         end
       end
     rescue ArgumentError
-      puts "\nUSE NUMBERS PLEASE :) \n"
+      puts "\n>>> Use only numbers please <<< \n"
       play(b,p1,p2)
     end
 

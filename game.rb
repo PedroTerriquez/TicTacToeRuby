@@ -2,40 +2,39 @@ require 'pry'
 module TicTacToe
   class Game
     def initialize
-      b = Board.new
-      p1 = Player.new("X")
-      p2 = Player.new("O")
-      @turn = 0
-      @finish = 0
+      board = Board.new
+      player1 = Player.new("X")
+      player2 = Player.new("O")
+      @player, @finish = 0,0
       @correctposition = 0..8 #Array start at 0
-      play(b,p1,p2)
+      play(board,player1,player2)
     end
 
-    def play(b,p1,p2)
+    def play(board,player1,player2)
       while @finish < 9 
-        if @turn.even?
-          puts "Pick a position for X with numbers (0-9)"
-          position = Integer(gets.chomp) - 1
-          redo if !@correctposition.include?position
-          redo unless b.pick(position,p1.symbol) 
-          @turn = 1
-          @finish += 1
-        elsif @turn.odd?
-          puts "Pick a position for O with numbers (0-9)"
-          position = Integer(gets.chomp) -1
-          redo if !@correctposition.include?position
-          redo unless b.pick(position,p2.symbol)
-          @turn = 0
-          @finish += 1
-        end
-        if winner?b
-          @finish = 9
-          puts "WINNER IS #{winner?b}"
+        if @player.even? ? turn(board,player1) : turn(board,player2)
         end
       end
-    rescue ArgumentError
-      puts "\n>>> Use only numbers please <<< \n"
-      play(b,p1,p2)
+    end
+
+    def turn(board,player)
+      puts "Pick a position for #{player.symbol} with numbers (0-9)"
+      position = validate(gets.chomp)
+      turn(board,player) unless board.pick(position,player.symbol)
+      @player += 1
+      if winner?board
+        @finish = 9
+        puts "WINNER IS #{winner?board}"
+      end
+    end
+
+    def validate(value)
+      position = Integer(value)-1
+      if @correctposition.include?position
+        return position
+      end
+    rescue
+      puts "Not a number"
     end
 
     def winner?(b)
